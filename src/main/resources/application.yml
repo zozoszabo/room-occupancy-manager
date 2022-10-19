@@ -1,3 +1,13 @@
 room-occupancy-manager:
+  version: '@project.version@'
+  name: '@project.name@'
   application-value:
+    currencyUnit: EUR
     premium-limit: EUR 100
+spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+server:
+  servlet:
+    context-path: /room-occupancy-manager
