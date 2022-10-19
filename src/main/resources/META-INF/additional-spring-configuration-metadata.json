@@ -1,0 +1,9 @@
+{
+  "properties": [
+    {
+      "name": "room-occupancy-manager.application-value.premium-limit",
+      "type": "org.javamoney.moneta.Money",
+      "description": "Not book a customer willing to pay this amount or more for the night into an Economy room."
+    }
+  ]
+}

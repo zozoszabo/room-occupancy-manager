@@ -17,6 +17,7 @@
 
     <properties>
         <java.version>11</java.version>
+        <moneta.version>1.4.1</moneta.version>
     </properties>
 
     <dependencies>
@@ -25,9 +26,20 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.javamoney</groupId>
+            <artifactId>moneta</artifactId>
+            <version>${moneta.version}</version>
+            <type>pom</type>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
