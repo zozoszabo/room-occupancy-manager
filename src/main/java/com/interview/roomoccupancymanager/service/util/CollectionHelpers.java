@@ -14,4 +14,8 @@ public final class CollectionHelpers {
     public static <E extends Comparable<E>> List<E> reverse(@NonNull final Collection<? extends E> collection) {
         return collection.stream().sorted(Comparator.reverseOrder()).collect(Collectors.toList());
     }
+
+    public static int remainingElements(@NonNull final Collection<?> collection, final int currentIndex) {
+        return collection.size() - currentIndex;
+    }
 }

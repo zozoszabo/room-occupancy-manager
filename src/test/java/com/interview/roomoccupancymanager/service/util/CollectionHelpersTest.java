@@ -16,6 +16,24 @@ class CollectionHelpersTest {
         Assertions.assertThat(actual).containsExactlyElementsOf(expected);
     }
 
+    @MethodSource("provideRemainingElements")
+    @ParameterizedTest(name = "[{index}] remainingElements(''{0}'', ''{1}'') ==>  ''{2}''")
+    <E> void shouldVerifyRemainingElements(final List<E> collection, final int currentIndex, final int expected) {
+        final int actual = CollectionHelpers.remainingElements(collection, currentIndex);
+        Assertions.assertThat(actual).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> provideRemainingElements() {
+        final List<Integer> integers = List.of(0, 1, 2, 3);
+        return Stream.of(
+                Arguments.of(integers, 0, 4),
+                Arguments.of(integers, 1, 3),
+                Arguments.of(integers, 2, 2),
+                Arguments.of(integers, 3, 1),
+                Arguments.of(integers, 4, 0)
+        );
+    }
+
     private static Stream<Arguments> provideReverseData() {
         return Stream.of(
                 Arguments.of(List.of("A", "B", "C"), List.of("C", "B", "A")),
