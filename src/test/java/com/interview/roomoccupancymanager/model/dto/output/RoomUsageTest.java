@@ -1,6 +1,10 @@
 package com.interview.roomoccupancymanager.model.dto.output;
 
+import javax.money.CurrencyUnit;
+import javax.money.Monetary;
+
 import com.interview.roomoccupancymanager.model.dto.output.RoomUsage.Usage;
+import com.interview.roomoccupancymanager.service.model.CurrentRoomUsage;
 import org.assertj.core.api.Assertions;
 import org.javamoney.moneta.Money;
 import org.junit.jupiter.api.Test;
@@ -16,8 +20,8 @@ class RoomUsageTest {
     @Test
     void verifySerialization() throws Exception {
         final RoomUsage roomUsage = roomUsage(
-                usage(10, 5, euro(5)),
-                usage(15, 10, euro(10))
+                usage(10, 5, money(5)),
+                usage(15, 10, money(10))
         );
 
         final JsonContent<RoomUsage> actual = jacksonTester.write(roomUsage);
@@ -30,6 +34,13 @@ class RoomUsageTest {
         Assertions.assertThat(actual).extractingJsonPathStringValue("$.economyUsage.income").isEqualTo("EUR 10.00");
     }
 
+    @Test
+    void createUsageFromCurrentRoomUsage() {
+        final Usage actual = Usage.of(CurrentRoomUsage.of(5, euro()));
+
+        Assertions.assertThat(actual).isEqualTo(usage(5, 0, money(0)));
+    }
+
     static RoomUsage roomUsage(final Usage premiumUsage, final Usage economyUsage) {
         return RoomUsage.builder().premiumUsage(premiumUsage).economyUsage(economyUsage).build();
     }
@@ -38,7 +49,11 @@ class RoomUsageTest {
         return Usage.builder().available(available).used(used).income(money).build();
     }
 
-    static Money euro(final int number) {
-        return Money.of(number, "EUR");
+    static CurrencyUnit euro() {
+        return Monetary.getCurrency("EUR");
+    }
+
+    static Money money(final int number) {
+        return Money.of(number, euro());
     }
 }
