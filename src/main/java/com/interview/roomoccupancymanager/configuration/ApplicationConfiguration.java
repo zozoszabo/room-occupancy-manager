@@ -1,5 +1,12 @@
 package com.interview.roomoccupancymanager.configuration;
 
+import java.util.Collection;
+import java.util.List;
+
+import com.interview.roomoccupancymanager.configuration.value.ApplicationValue;
+import com.interview.roomoccupancymanager.service.util.MoneyConverters;
+import lombok.NonNull;
+import org.javamoney.moneta.Money;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.context.annotation.Bean;
@@ -15,6 +22,14 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 @ConfigurationPropertiesScan(basePackages = "com.interview.roomoccupancymanager.configuration.value")
 public class ApplicationConfiguration {
+
+    @Bean
+    public Collection<Money> guestsMock(@NonNull final ApplicationValue applicationValue) {
+        return MoneyConverters.convert(
+                applicationValue.getCurrencyUnit(),
+                List.of(23.0D, 45.0D, 155.0D, 374.0D, 22.0D, 99.99D, 100.0D, 101.0D, 115.0D, 209.0D)
+        );
+    }
 
     @Bean
     public Docket getDocker(@Value("${room-occupancy-manager.name}") final String name,
